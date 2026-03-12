@@ -1,0 +1,832 @@
+<!doctype html>
+<html lang="id">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Platform Pembelajaran Geografi SMA</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      overflow: hidden;
+    }
+
+    .main-wrapper {
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .header p {
+      font-size: 1.1rem;
+      opacity: 0.95;
+      margin-bottom: 0.3rem;
+    }
+
+    .content-container {
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .welcome-section {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .welcome-section h2 {
+      color: #667eea;
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .welcome-section p {
+      color: #555;
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    .classes-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .class-card {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .class-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .class-card h3 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #667eea;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .class-card ul {
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+
+    .class-card li {
+      padding: 0.6rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+      color: #555;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .class-card li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: #764ba2;
+      font-weight: bold;
+    }
+
+    .class-badge {
+      display: inline-block;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .badge-x {
+      background-color: #e3f2fd;
+      color: #1976d2;
+    }
+
+    .badge-xi {
+      background-color: #f3e5f5;
+      color: #7b1fa2;
+    }
+
+    .badge-xii {
+      background-color: #fff3e0;
+      color: #e65100;
+    }
+
+    .material-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 2px solid #eee;
+    }
+
+    .material-item {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      padding: 1.2rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #333;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .material-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .video-gallery {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .video-gallery h2 {
+      color: #667eea;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .video-input-section {
+      background: #f9f9f9;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+      align-items: flex-start;
+    }
+
+    .input-group input {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.8rem;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      transition: border-color 0.3s;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .input-group button {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      white-space: nowrap;
+    }
+
+    .input-group button:hover {
+      background: #764ba2;
+    }
+
+    .input-group button:disabled {
+      background: #999;
+      cursor: not-allowed;
+    }
+
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .video-card {
+      background: #f9f9f9;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .video-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .video-preview {
+      width: 100%;
+      height: 180px;
+      background: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 3rem;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .video-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .play-button {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: rgba(102, 126, 234, 0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+
+    .video-preview:hover .play-button {
+      background: rgba(118, 75, 162, 1);
+      transform: scale(1.1);
+    }
+
+    .video-info {
+      padding: 1rem;
+    }
+
+    .video-title {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .video-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.8rem;
+    }
+
+    .video-actions button {
+      flex: 1;
+      padding: 0.6rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+    }
+
+    .btn-watch {
+      background: #667eea;
+      color: white;
+    }
+
+    .btn-watch:hover {
+      background: #764ba2;
+    }
+
+    .btn-delete {
+      background: #ffcccc;
+      color: #c00;
+    }
+
+    .btn-delete:hover {
+      background: #ff9999;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: #999;
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top: 2px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .confirmation-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .confirmation-modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      text-align: center;
+      min-width: 300px;
+    }
+
+    .modal-content p {
+      color: #555;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .modal-buttons button {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .modal-btn-confirm {
+      background: #ff6b6b;
+      color: white;
+    }
+
+    .modal-btn-confirm:hover {
+      background: #ff5252;
+    }
+
+    .modal-btn-cancel {
+      background: #ddd;
+      color: #333;
+    }
+
+    .modal-btn-cancel:hover {
+      background: #ccc;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #333;
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+ </head>
+ <body>
+  <div class="main-wrapper"><!-- Header -->
+   <div class="header">
+    <h1>🌍 Platform Pembelajaran Geografi SMA</h1>
+    <p id="school-name">SMA Negeri Taruna Nala, Jawa Timur</p>
+    <p id="teacher-name">Pengajar: Candra Nuri Megawati</p>
+   </div><!-- Content -->
+   <div class="content-container"><!-- Welcome Section -->
+    <div class="welcome-section">
+     <h2>Selamat Datang</h2>
+     <p id="welcome-message">Jelajahi materi pembelajaran Geografi untuk kelas X, XI, dan XII. Platform ini dirancang untuk membantu Anda memahami konsep-konsep geografi secara mendalam dengan dukungan video pembelajaran.</p>
+    </div><!-- Classes Section -->
+    <div class="classes-container"><!-- Kelas X -->
+     <div class="class-card"><span class="class-badge badge-x">KELAS X</span>
+      <h3><i data-lucide="book-open" style="width: 24px; height: 24px;"></i> Kelas X</h3>
+      <ul>
+       <li>Pengetahuan Dasar Geografi</li>
+       <li>Pemetaan, Penginderaan Jauh &amp; SIG</li>
+       <li>Bumi dan Kehidupannya</li>
+       <li>Penelitian Geografi</li>
+       <li>Litosfer</li>
+       <li>Atmosfer</li>
+       <li>Hidrosfer</li>
+      </ul>
+      <div class="material-grid">
+       <div class="material-item">
+        📍 Dasar Geografi
+       </div>
+       <div class="material-item">
+        🗺️ Pemetaan
+       </div>
+       <div class="material-item">
+        🌎 Bumi
+       </div>
+       <div class="material-item">
+        🔬 Penelitian
+       </div>
+       <div class="material-item">
+        ⛰️ Litosfer
+       </div>
+       <div class="material-item">
+        ☁️ Atmosfer
+       </div>
+       <div class="material-item">
+        💧 Hidrosfer
+       </div>
+      </div>
+     </div><!-- Kelas XI -->
+     <div class="class-card"><span class="class-badge badge-xi">KELAS XI</span>
+      <h3><i data-lucide="book-open" style="width: 24px; height: 24px;"></i> Kelas XI</h3>
+      <ul>
+       <li>Posisi Strategis Indonesia</li>
+       <li>Persebaran Flora &amp; Fauna</li>
+       <li>Dinamika Kependudukan</li>
+       <li>Mitigasi Bencana</li>
+      </ul>
+      <div class="material-grid">
+       <div class="material-item">
+        🗺️ Posisi Indonesia
+       </div>
+       <div class="material-item">
+        🦁 Flora Fauna
+       </div>
+       <div class="material-item">
+        👥 Kependudukan
+       </div>
+       <div class="material-item">
+        ⚠️ Mitigasi
+       </div>
+      </div>
+     </div><!-- Kelas XII -->
+     <div class="class-card"><span class="class-badge badge-xii">KELAS XII</span>
+      <h3><i data-lucide="book-open" style="width: 24px; height: 24px;"></i> Kelas XII</h3>
+      <ul>
+       <li>Wilayah dan Perwilayahan</li>
+       <li>Peta, Penginderaan Jauh &amp; SIG</li>
+       <li>Interaksi Desa dan Kota</li>
+       <li>Negara Maju dan Berkembang</li>
+      </ul>
+      <div class="material-grid">
+       <div class="material-item">
+        📊 Wilayah
+       </div>
+       <div class="material-item">
+        🛰️ Teknologi
+       </div>
+       <div class="material-item">
+        🏙️ Desa Kota
+       </div>
+       <div class="material-item">
+        🌐 Negara
+       </div>
+      </div>
+     </div>
+    </div><!-- Video Gallery Section -->
+    <div class="video-gallery">
+     <h2><i data-lucide="play-circle" style="width: 28px; height: 28px;"></i> Galeri Video Pembelajaran</h2>
+     <div class="video-input-section">
+      <h3 style="color: #667eea; margin-bottom: 1rem;">Tambah Video Pembelajaran</h3>
+      <div class="input-group"><input type="text" id="video-title" placeholder="Judul video..."> <input type="text" id="video-url" placeholder="Link YouTube (https://...)">
+      </div><button id="add-video-btn" style="width: 100%; justify-content: center;"> <i data-lucide="plus" style="width: 18px; height: 18px;"></i> Tambah Video </button>
+     </div>
+     <div id="videos-container" class="videos-grid"></div>
+    </div>
+   </div>
+  </div><!-- Confirmation Modal -->
+  <div id="confirmation-modal" class="confirmation-modal">
+   <div class="modal-content">
+    <p>Apakah Anda yakin ingin menghapus video ini?</p>
+    <div class="modal-buttons"><button class="modal-btn-confirm" id="confirm-delete">Hapus</button> <button class="modal-btn-cancel" id="cancel-delete">Batal</button>
+    </div>
+   </div>
+  </div>
+  <script>
+    let currentConfig = {
+      teacher_name: "Candra Nuri Megawati",
+      school_name: "SMA Negeri Taruna Nala, Jawa Timur",
+      welcome_message: "Jelajahi materi pembelajaran Geografi untuk kelas X, XI, dan XII. Platform ini dirancang untuk membantu Anda memahami konsep-konsep geografi secara mendalam dengan dukungan video pembelajaran."
+    };
+
+    let videoToDelete = null;
+
+    // Initialize Element SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig: currentConfig,
+        onConfigChange: async (config) => {
+          currentConfig = config;
+          updateUI();
+        },
+        mapToCapabilities: () => ({
+          recolorables: [],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["teacher_name", config.teacher_name || currentConfig.teacher_name],
+          ["school_name", config.school_name || currentConfig.school_name],
+          ["welcome_message", config.welcome_message || currentConfig.welcome_message]
+        ])
+      });
+    }
+
+    // Initialize Data SDK
+    const dataHandler = {
+      onDataChanged(videos) {
+        renderVideos(videos);
+      }
+    };
+
+    async function initializeApp() {
+      if (window.dataSdk) {
+        const result = await window.dataSdk.init(dataHandler);
+        if (!result.isOk) {
+          console.error("Failed to initialize Data SDK");
+        }
+      }
+      updateUI();
+      lucide.createIcons();
+    }
+
+    function updateUI() {
+      document.getElementById("teacher-name").textContent = `Pengajar: ${currentConfig.teacher_name}`;
+      document.getElementById("school-name").textContent = currentConfig.school_name;
+      document.getElementById("welcome-message").textContent = currentConfig.welcome_message;
+    }
+
+    function getYouTubeThumbnail(url) {
+      try {
+        const videoId = url.includes("youtu.be") 
+          ? url.split("youtu.be/")[1]?.split("?")[0]
+          : url.split("v=")[1]?.split("&")[0];
+        return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+      } catch {
+        return null;
+      }
+    }
+
+    function openVideoModal(url) {
+      const modal = window.open("", "_blank", "width=1000,height=600");
+      try {
+        const videoId = url.includes("youtu.be") 
+          ? url.split("youtu.be/")[1]?.split("?")[0]
+          : url.split("v=")[1]?.split("&")[0];
+        
+        if (videoId) {
+          modal.document.write(`
+            <html>
+              <head>
+                <style>
+                  body { margin: 0; background: #000; }
+                  iframe { width: 100%; height: 100vh; border: none; }
+                </style>
+              </head>
+              <body>
+                <iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>
+              </body>
+            </html>
+          `);
+        }
+      } catch (e) {
+        console.error("Error opening video:", e);
+      }
+    }
+
+    function renderVideos(videos) {
+      const container = document.getElementById("videos-container");
+      
+      if (videos.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state" style="grid-column: 1/-1;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🎬</div>
+            <p>Belum ada video. Tambahkan video pembelajaran untuk memulai!</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = videos.map(video => `
+        <div class="video-card">
+          <div class="video-preview" onclick="openVideoModal('${video.url}')">
+            ${video.url ? `<img src="${getYouTubeThumbnail(video.url) || ''}" alt="thumbnail" onerror="this.style.display='none'">` : ""}
+            <div class="play-button">▶</div>
+          </div>
+          <div class="video-info">
+            <div class="video-title">${video.title}</div>
+            <div class="video-actions">
+              <button class="btn-watch" onclick="openVideoModal('${video.url}')">
+                <i data-lucide="play" style="width: 16px; height: 16px;"></i> Tonton
+              </button>
+              <button class="btn-delete" onclick="showDeleteConfirm('${video.__backendId}')">
+                <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+
+      lucide.createIcons();
+    }
+
+    function showDeleteConfirm(videoId) {
+      videoToDelete = videoId;
+      document.getElementById("confirmation-modal").classList.add("active");
+    }
+
+    function hideDeleteConfirm() {
+      document.getElementById("confirmation-modal").classList.remove("active");
+      videoToDelete = null;
+    }
+
+    async function deleteVideo() {
+      if (!videoToDelete) return;
+
+      const button = document.getElementById("add-video-btn");
+      button.disabled = true;
+
+      const videos = document.querySelectorAll("[data-video-id]");
+      let videoToRemove = null;
+
+      for (const video of videos) {
+        const backendId = video.dataset.videoId;
+        if (backendId === videoToDelete) {
+          videoToRemove = video;
+          break;
+        }
+      }
+
+      if (window.dataSdk && videoToRemove) {
+        const result = await window.dataSdk.delete({
+          __backendId: videoToDelete,
+          title: videoToRemove.dataset.title,
+          url: videoToRemove.dataset.url
+        });
+
+        if (!result.isOk) {
+          showToast("Gagal menghapus video");
+        } else {
+          showToast("Video berhasil dihapus");
+        }
+      }
+
+      hideDeleteConfirm();
+      button.disabled = false;
+    }
+
+    function showToast(message) {
+      const toast = document.createElement("div");
+      toast.className = "toast";
+      toast.textContent = message;
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, 3000);
+    }
+
+    document.getElementById("add-video-btn").addEventListener("click", async (e) => {
+      e.preventDefault();
+
+      const title = document.getElementById("video-title").value.trim();
+      const url = document.getElementById("video-url").value.trim();
+
+      if (!title || !url) {
+        showToast("Silakan isi judul dan link video");
+        return;
+      }
+
+      if (!url.includes("youtube.com") && !url.includes("youtu.be")) {
+        showToast("Gunakan link YouTube yang valid");
+        return;
+      }
+
+      const button = document.getElementById("add-video-btn");
+      button.disabled = true;
+      button.innerHTML = '<div class="loading"><div class="loading-spinner"></div> Menambah...</div>';
+
+      if (window.dataSdk) {
+        const result = await window.dataSdk.create({
+          title,
+          url,
+          description: ""
+        });
+
+        if (result.isOk) {
+          document.getElementById("video-title").value = "";
+          document.getElementById("video-url").value = "";
+          showToast("Video berhasil ditambahkan!");
+        } else {
+          showToast("Gagal menambah video");
+        }
+      }
+
+      button.disabled = false;
+      button.innerHTML = '<i data-lucide="plus" style="width: 18px; height: 18px;"></i> Tambah Video';
+      lucide.createIcons();
+    });
+
+    document.getElementById("confirm-delete").addEventListener("click", deleteVideo);
+    document.getElementById("cancel-delete").addEventListener("click", hideDeleteConfirm);
+
+    // Initialize on load
+    window.addEventListener("DOMContentLoaded", initializeApp);
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dafbfca732a40e0',t:'MTc3MzI4NjUzMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
